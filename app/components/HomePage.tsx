@@ -11,8 +11,10 @@ import {
   Youtube,
 } from "./Icons";
 import Link from "next/link";
+import Popup from "./Popup";
 
 export default function HomePage() {
+  const [openPopup, setOpenPopup] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -44,6 +46,7 @@ export default function HomePage() {
       if (response.ok) {
         setSuccessMessage(data.message || "Successfully joined the waitlist!");
         setEmail("");
+        setOpenPopup(true)
       } else {
         setError(data.message || "An error occurred. Please try again.");
       }
@@ -56,7 +59,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="pt-[70px] lg:pt-[64px] lg:pb-[80px] relative lg:min-h-screen w-full overflow-hidden bg-black text-white">
+    <div className="pt-[70px] md:pt-[64px] md:pb-[80px] relative md:min-h-screen w-full overflow-hidden bg-black text-white">
       {/* Background Video */}
       <div className="my-4 sm:my-8 md:my-11 mx-4 sm:mx-8 md:mx-50 absolute inset-0 z-15">
         <video
@@ -196,6 +199,9 @@ export default function HomePage() {
           </video>
         </div>
       </div>
+      {openPopup && 
+      <Popup />
+      }
     </div>
   );
 }
